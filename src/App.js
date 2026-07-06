@@ -2,7 +2,7 @@ import React from 'react'
 import Avatar from './component/Avatar'
 import Partlist from './component/Partlist'
 import './App.css'
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
   const parts = {
         body: {

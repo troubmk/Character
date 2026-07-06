@@ -5,7 +5,7 @@ function Icon({ title,index,handleClick,zoom,top }) {
         <div className="clickable square"> 
             <img 
             src={`character/${title}/${index}.png`} 
-            alt={index} 
+            alt="" 
             className="img-center" 
             onClick={()=>handleClick(title,index)}
             height={60 * zoom}
