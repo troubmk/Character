@@ -1,9 +1,16 @@
 import React from 'react'
 
-function Icon({ title,index }) {
+function Icon({ title,index,handleClick,zoom,top }) {
     return (
-        <div className="square"> 
-            <img src={`character/${title}/${index}.png`} alt={index} className="img-center"/>
+        <div className="clickable square"> 
+            <img 
+            src={`character/${title}/${index}.png`} 
+            alt={index} 
+            className="img-center" 
+            onClick={()=>handleClick(title,index)}
+            height={60 * zoom}
+            style={{ top }}
+            />
         </div>
      )
 }

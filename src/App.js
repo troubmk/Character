@@ -59,58 +59,98 @@ import { useEffect, useState } from "react";
     },
 }
 
-function App() {
+function generateRandomNumber (number) {
+   return Math.floor(Math.random()*number)+1;
+  
+}
 
-    const [body, setBody] = useState(10);
-    const [eyes, setEyes] = useState(2);
-    const [eyebrows, setEyebrows] = useState(1);
-    const [hair, setHair] = useState(1);
-    const [mouths, setMouths] = useState(1);
-    const [clothing1, setClothing1] = useState(1);
-    const [clothing2, setClothing2] = useState(1);
-    const [clothing3, setClothing3] = useState(1);
+ function randomizeAvatar () {
+  return {
+      body: generateRandomNumber(parts.body.total),
+      eyes: generateRandomNumber(parts.eyes.total),
+      eyebrows: generateRandomNumber(parts.eyebrows.total),
+      hair: generateRandomNumber(parts.hair.total),
+      mouths: generateRandomNumber(parts.mouths.total),
+      clothing1: generateRandomNumber(parts['clothing (l1)'].total),
+      clothing2: generateRandomNumber(parts['clothing (l2)'].total),
+      clothing3: generateRandomNumber(parts['clothing (l3)'].total),
+   }
+}
+
+function App() {
+   const [avatar, setAvatar] = useState(randomizeAvatar());
+
+   const handleClick = (title,index) => {
+     setAvatar({
+        ...avatar,
+       [title]: index
+     });
+}
+
+   //  const [body, setBody] = useState(10);
+   //  const [eyes, setEyes] = useState(2);
+   //  const [eyebrows, setEyebrows] = useState(1);
+   //  const [hair, setHair] = useState(1);
+   //  const [mouths, setMouths] = useState(1);
+   //  const [clothing1, setClothing1] = useState(1);
+   //  const [clothing2, setClothing2] = useState(1);
+   //  const [clothing3, setClothing3] = useState(1);
   ;
 
-const randomAvavar = () => {
-   setBody(Math.floor(Math.random()*parts.body.total)+1);
-   setEyes(Math.floor(Math.random()*parts.eyes.total)+1);
-   setHair(Math.floor(Math.random()*parts.hair.total));
-   setEyebrows(Math.floor(Math.random()*parts.eyebrows.total)+1);
-   setMouths(Math.floor(Math.random()*parts.mouths.total)+1);
-   setClothing1(Math.floor(Math.random()*parts["clothing (l1)"].total)+1);
-   setClothing2(Math.floor(Math.random()*parts["clothing (l2)"].total)+1);
-   setClothing3(Math.floor(Math.random()*parts["clothing (l3)"].total)+1);
-};
+// const randomAvavar = () => {
+//    setBody(Math.floor(Math.random()*parts.body.total)+1);
+//    setEyes(Math.floor(Math.random()*parts.eyes.total)+1);
+//    setHair(Math.floor(Math.random()*parts.hair.total));
+//    setEyebrows(Math.floor(Math.random()*parts.eyebrows.total)+1);
+//    setMouths(Math.floor(Math.random()*parts.mouths.total)+1);
+//    setClothing1(Math.floor(Math.random()*parts["clothing (l1)"].total)+1);
+//    setClothing2(Math.floor(Math.random()*parts["clothing (l2)"].total)+1);
+//    setClothing3(Math.floor(Math.random()*parts["clothing (l3)"].total)+1);
+// };
 
-useEffect (()=>{
-   randomAvavar();
-},[])
+// useEffect (()=>{
+//    randomizeAvavar();
+// },[])
+
+// const handleClick = (title,index) => {
+//    if(title==="body") {setBody(index)};
+//    if(title==="eyes") {setEyes(index)};
+//    if(title==="eyebrows") {setEyebrows(index)};
+//    if(title==="hair") {setHair(index)};
+//    if(title==="mouths") {setMouths(index)};
+//    if(title==="clothing1") {setClothing1(index)};
+//    if(title==="clothing2") {setClothing2(index)};
+//    if(title==="clothing3") {setClothing3(index)};
+// };
 
   return (
     <>
     <div className="App">
         <div className="title">CHARACTER</div>
         <div className="subtitle">🛠️CUSTOMIZATION🛠️</div>
+        <div className="divider"></div>
          <div className="avatar-group gap-30">
          <div> 
             <div className="avatar-wrapper">
-               <Avatar body={body}
-                  hair={hair}
-                  mouths={mouths}
-                  eyes={eyes}
-                  eyebrows={eyebrows}
-                  clothing1={clothing1}
-                  clothing2={clothing2}
-                  clothing3={clothing3}/>
+               <Avatar {...avatar}/>
+               <div className="text-center">
+               <button className="button" onClick={()=>{setAvatar(randomizeAvatar())}}>Randomize!</button>
             </div>
-            <div className="text-center">
-               <button className="button" onClick={randomAvavar}>Randomize!</button>
             </div>
          </div>
          
           <div>
             {  Object.keys(parts).map(title => (
-              <Partlist title={title} total={parts[title].total} path={parts[title].path}/> 
+               <div className="list-section">
+                  <h2>{title}</h2>
+                  
+                  <Partlist 
+                  title={title} 
+                  total={parts[title].total} 
+                  path={parts[title].path} 
+                  handleClick={handleClick} 
+                  /> 
+                </div>
             ))}
           </div>
           </div> 
